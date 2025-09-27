@@ -65,8 +65,6 @@ export function NestedDrawer({
     setStack([{ title, items }]);
   }
 
-  console.log("current", current);
-
   return (
     <Drawer
       open={open}
