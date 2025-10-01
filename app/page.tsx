@@ -1,11 +1,9 @@
-import { NestedDrawerDemo } from "@/components/nested-drawer-demo";
-import { NestedDrawerDemo2 } from "@/components/nested-drawer-demo-2";
+import { TransitionDrawer } from "@/components/transition-drawer";
 
 export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      {/* <NestedDrawerDemo /> */}
-      <NestedDrawerDemo2 />
+      <TransitionDrawer />
     </div>
   );
 }
