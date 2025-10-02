@@ -1,0 +1,482 @@
+---
+title: Transition Drawer
+description: A transitioning drawer is a UI component that slides in or out of view during a transition, often used to reveal additional content or navigation options. It provides a smooth animation effect, enhancing the user experience by making interactions feel more dynamic and intuitive (for shadcn/ui).
+---
+<GithubInfo
+  owner="Naveenkms"
+  repo="nested-dropdown"
+  className="mb-2"
+/>
+
+# Example
+
+## Preview
+<div className="flex justify-center items-center h-[30dvh] min-h-32 border rounded-md">
+    <TransitionDrawer />
+</div>
+
+## Code
+```ts title="transition-drawer.tsx"
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Archive, HomeIcon, Info, ReceiptText } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerHandle,
+} from "@/registry/new-york/components/ui/drawer";
+import { AnimateHeight } from "@/registry/new-york/components/ui/animate-height";
+import {
+  TransitionPanel,
+  TransitionPanelContent,
+  TransitionPanelTrigger,
+} from "@/registry/new-york/components/ui/transition-panel";
+import { Button, buttonVariants } from "@/registry/new-york/components/ui/button";
+
+export function TransitionDrawer() {
+  return (
+    <Drawer>
+      <DrawerTrigger>Open Drawer</DrawerTrigger>
+      <DrawerContent asChild className="overflow-hidden w-md mx-auto">
+        <AnimateHeight>
+          <DrawerHandle />
+          <VisuallyHidden>
+            <DrawerHeader>
+              <DrawerTitle>Drawer Title</DrawerTitle>
+            </DrawerHeader>
+          </VisuallyHidden>
+          <TransitionPanel defaultValue="root">
+            <TransitionPanelContent value="root">
+              <ul className="divide-y divide-border">
+                <li>
+                  <TransitionPanelTrigger value="home">
+                    <HomeIcon />
+                    Home
+                  </TransitionPanelTrigger>
+                </li>
+                <li>
+                  <TransitionPanelTrigger value="products">
+                    <Archive />
+                    Products
+                  </TransitionPanelTrigger>
+                </li>
+                <li>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start"
+                    asChild
+                  >
+                    <Link href="/about">
+                      <ReceiptText />
+                      About
+                    </Link>
+                  </Button>
+                </li>
+                <li>
+                  <TransitionPanelTrigger value="more-info">
+                    <Info />
+                    More Info
+                  </TransitionPanelTrigger>
+                </li>
+              </ul>
+            </TransitionPanelContent>
+
+            <TransitionPanelContent value="home">
+              <ul>
+                <li>
+                  <TransitionPanelTrigger value="products">
+                    Products
+                  </TransitionPanelTrigger>
+                </li>
+              </ul>
+            </TransitionPanelContent>
+
+            <TransitionPanelContent value="products">
+              <h6 className="text-center font-semibold">Products</h6>
+              <ul className="divide-y divide-border">
+                <li
+                  className={buttonVariants({
+                    variant: "ghost",
+                    className: "w-full justify-start hover:bg-inherit",
+                  })}
+                >
+                  Item 1
+                </li>
+                <li
+                  className={buttonVariants({
+                    variant: "ghost",
+                    className: "w-full justify-start hover:bg-inherit",
+                  })}
+                >
+                  Item 2
+                </li>
+                <li
+                  className={buttonVariants({
+                    variant: "ghost",
+                    className: "w-full justify-start hover:bg-inherit",
+                  })}
+                >
+                  Item 3
+                </li>
+              </ul>
+            </TransitionPanelContent>
+            <TransitionPanelContent value="more-info">
+              <Image
+                src="https://avatars.githubusercontent.com/u/89766436?v=4"
+                width={100}
+                height={100}
+                alt="avatar"
+                className="rounded-md overflow-hidden aspect-video w-full"
+              />
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                repellat repudiandae est? Lorem ipsum, dolor sit amet
+                consectetur adipisicing elit. Expedita molestias delectus, ut
+                sint adipisci voluptatum obcaecati. Iure illo ex blanditiis.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. A
+                mollitia qui facilis.
+              </p>
+            </TransitionPanelContent>
+          </TransitionPanel>
+        </AnimateHeight>
+      </DrawerContent>
+    </Drawer>
+  );
+}
+```
+
+
+## Installation - Transition Drawer 
+<p>Transition drawer makes use of the shadcn <code>&lt;Drawer&gt;</code> component and the <code>&lt;TransitionPanel&gt;</code> component that you can install from here.</p>
+
+### Using shadcn registry (recommended)
+```ts title="npm"
+npx shadcn@latest add https://nested-dropdown-pearl.vercel.app/r/transition-drawer.json
+```
+### Manual Installation
+1. Install shadcn drawer component: https://ui.shadcn.com/docs/components/drawer. You need to slightly modify the drawer component.
+```ts title="drawer.tsx"
+function DrawerContent({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof DrawerPrimitive.Content>) {
+  return (
+    <DrawerPortal data-slot="drawer-portal">
+      <DrawerOverlay />
+      <DrawerPrimitive.Content
+        data-slot="drawer-content"
+        className={cn(
+          "group/drawer-content bg-background fixed z-50 flex h-auto flex-col",
+          "data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh] data-[vaul-drawer-direction=top]:rounded-b-lg data-[vaul-drawer-direction=top]:border-b",
+          "data-[vaul-drawer-direction=bottom]:inset-x-0 data-[vaul-drawer-direction=bottom]:bottom-0 data-[vaul-drawer-direction=bottom]:mt-24 data-[vaul-drawer-direction=bottom]:max-h-[80vh] data-[vaul-drawer-direction=bottom]:rounded-t-lg data-[vaul-drawer-direction=bottom]:border-t",
+          "data-[vaul-drawer-direction=right]:inset-y-0 data-[vaul-drawer-direction=right]:right-0 data-[vaul-drawer-direction=right]:w-3/4 data-[vaul-drawer-direction=right]:border-l data-[vaul-drawer-direction=right]:sm:max-w-sm",
+          "data-[vaul-drawer-direction=left]:inset-y-0 data-[vaul-drawer-direction=left]:left-0 data-[vaul-drawer-direction=left]:w-3/4 data-[vaul-drawer-direction=left]:border-r data-[vaul-drawer-direction=left]:sm:max-w-sm",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </DrawerPrimitive.Content>
+    </DrawerPortal>
+  );
+}
+
+function DrawerHandle() {
+  return (
+    <div className="bg-muted mx-auto mt-4 hidden h-2 w-[100px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
+  );
+}
+```
+2. Add an <code>&lt;AnimateHeight/&gt;</code> component for the drawer animation.
+```ts title="npm"
+npm i motion react-use-measure
+```
+```ts title="animate-height.tsx"
+"use client";
+import * as React from "react";
+import { motion } from "motion/react";
+import useMeasure from "react-use-measure";
+
+type AnimateHeightProps = React.ComponentProps<typeof motion.div> & {
+  children: React.ReactNode;
+};
+
+export function AnimateHeight({ children, ...props }: AnimateHeightProps) {
+  const [ref, bounds] = useMeasure();
+
+  return (
+    <motion.div
+      animate={{ height: bounds.height > 0 ? bounds.height : "auto" }}
+      {...props}
+    >
+      <div ref={ref}>{children}</div>
+    </motion.div>
+  );
+}
+```
+3. Optional - Install @radix-ui/react-visually-hidden from radix if you need to hide the drawer title while maintaining accessibility. 
+
+4. Follow the <a href="#installation---transition-panel"><code>&lt;TransitionPanel&gt;</code></a> installation.
+
+5. Then copy and paste the above <a href="#example-code">example code</a>.
+
+## Installation - Transition Panel 
+
+### Using shadcn registry (recommended)
+```ts title="npm"
+npx shadcn@latest add https://nested-dropdown-pearl.vercel.app/r/transition-panel.json
+```
+### Manual Installation
+1. Install motion
+```ts title="npm"
+npm i motion 
+```
+2. Paste the code
+```ts title="transition-panel.tsx"
+"use client";
+import * as React from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { ChevronRight } from "lucide-react";
+
+import { Button } from "@/registry/new-york/components/ui/button";
+import { cn } from "@/lib/utils";
+
+type Direction = 1 | -1;
+type PanelId = string;
+
+type TransitionPanelState = {
+  currentPanel: PanelId;
+  direction: Direction;
+  hasMoreThanOnePanel: boolean;
+  pushNewPanel: (panelId: PanelId) => void;
+  removePanel: () => void;
+};
+
+const initialContext: TransitionPanelState = {
+  currentPanel: "",
+  direction: 1,
+  hasMoreThanOnePanel: false,
+  pushNewPanel: () => {},
+  removePanel: () => {},
+};
+
+const TransitionPanelContext =
+  React.createContext<TransitionPanelState>(initialContext);
+
+const panelTransitionVariants = {
+  enter: (direction: Direction) => ({
+    opacity: 0,
+    x: direction > 0 ? "100%" : "-100%",
+    position: "initial",
+  }),
+  center: { opacity: 1, x: 0, zIndex: 1 },
+  exit: (direction: Direction) => ({
+    opacity: 0,
+    x: direction < 0 ? "100%" : "-100%",
+    position: "absolute",
+    zIndex: 0,
+  }),
+};
+
+type TransitionPanelProps = {
+  defaultValue: PanelId;
+  children: React.ReactNode;
+};
+
+function TransitionPanel({ defaultValue, children }: TransitionPanelProps) {
+  const [direction, setDirection] = React.useState<Direction>(1);
+
+  const [stack, setStack] = React.useState<PanelId[]>([defaultValue]);
+  const currentPanel = stack[stack.length - 1];
+  const hasMoreThanOnePanel = stack.length > 1;
+
+  const pushNewPanel = (panelId: PanelId) => {
+    setStack((prevStack) => [...prevStack, panelId]);
+    setDirection(1);
+  };
+
+  const removePanel = () => {
+    if (!hasMoreThanOnePanel) return;
+    setStack((prevStack) => prevStack.slice(0, -1));
+    setDirection(-1);
+  };
+
+  const value = {
+    currentPanel,
+    direction,
+    hasMoreThanOnePanel,
+    pushNewPanel,
+    removePanel,
+  };
+
+  return (
+    <TransitionPanelContext value={value}>
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={currentPanel}
+          variants={panelTransitionVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            duration: 0.3,
+          }}
+          custom={direction}
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </TransitionPanelContext>
+  );
+}
+
+const useTransitionPanel = () => {
+  const context = React.useContext(TransitionPanelContext);
+
+  if (context === undefined)
+    throw new Error("useTransitionPanel must be used within a TransitionPanel");
+
+  return context;
+};
+
+type TransitionPanelContentProps = React.ComponentProps<"div"> & {
+  value: PanelId;
+};
+
+function TransitionPanelContent({
+  value,
+  className,
+  children,
+  ...props
+}: TransitionPanelContentProps) {
+  const { currentPanel } = useTransitionPanel();
+
+  if (value === currentPanel) {
+    return (
+      <div className={cn("p-2", className)} {...props}>
+        <TransitionPanelBackButton className="mb-2" />
+        {children}
+      </div>
+    );
+  }
+}
+
+type TransitionPanelTriggerProps = React.ComponentProps<typeof Button> & {
+  value: PanelId;
+};
+
+function TransitionPanelTrigger({
+  value,
+  onClick,
+  children,
+  variant = "ghost",
+  className,
+  ...props
+}: TransitionPanelTriggerProps) {
+  const { pushNewPanel } = useTransitionPanel();
+
+  return (
+    <Button
+      onClick={(e) => {
+        pushNewPanel(value);
+        onClick?.(e);
+      }}
+      variant={variant}
+      className={cn("w-full justify-start", className)}
+      {...props}
+    >
+      {children}
+      <ChevronRight className="ml-auto shrink-0" />
+    </Button>
+  );
+}
+
+function TransitionPanelBackButton({
+  onClick,
+  children,
+  variant = "secondary",
+  className,
+  ...props
+}: React.ComponentProps<typeof Button>) {
+  const { hasMoreThanOnePanel, removePanel } = useTransitionPanel();
+
+  return (
+    <Button
+      onClick={(e) => {
+        removePanel();
+        onClick?.(e);
+      }}
+      variant={variant}
+      size="sm"
+      className={cn(!hasMoreThanOnePanel && "hidden", className)}
+      {...props}
+    >
+      {children || "Back"}
+    </Button>
+  );
+}
+
+export {
+  TransitionPanel,
+  TransitionPanelContent,
+  TransitionPanelTrigger,
+  TransitionPanelBackButton,
+};
+```
+
+### Sample usage
+```ts title="transition-panel-example.tsx"
+import {
+  TransitionPanel,
+  TransitionPanelContent,
+  TransitionPanelTrigger,
+} from "./transition-panel";
+
+const TRIGGER_TEXT = "Trigger";
+const CONTENT_TEXT = "Content";
+
+function TransitionPanelExample() {
+  return (
+    <TransitionPanel defaultValue="root">
+      <TransitionPanelContent value="root">
+        <TransitionPanelTrigger value="trigger">
+          {TRIGGER_TEXT}
+        </TransitionPanelTrigger>
+      </TransitionPanelContent>
+      <TransitionPanelContent value="trigger">
+        {CONTENT_TEXT}
+      </TransitionPanelContent>
+    </TransitionPanel>
+  );
+}
+```
+
+### Example 
+<div className="flex justify-center items-center h-[30dvh] min-h-32 border rounded-md">
+    <TransitionPanel defaultValue="root">
+      <TransitionPanelContent value="root" className="border">
+        <TransitionPanelTrigger value="trigger">
+          Trigger
+        </TransitionPanelTrigger>
+      </TransitionPanelContent>
+      <TransitionPanelContent value="trigger" className="border">
+        Content
+      </TransitionPanelContent>
+    </TransitionPanel>
+</div>
+
+
+import { GithubInfo } from 'fumadocs-ui/components/github-info';
+import {
+    TransitionPanel,
+    TransitionPanelContent,
+    TransitionPanelTrigger,
+} from "@/registry/new-york/components/ui/transition-panel";
+
+
