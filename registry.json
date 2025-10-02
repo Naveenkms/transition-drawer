@@ -12,7 +12,7 @@
       "registryDependencies": ["button"],
       "files": [
         {
-          "path": "registry/new-york/ui/transition-panel.tsx",
+          "path": "registry/new-york/components/ui/transition-panel.tsx",
           "type": "registry:ui"
         }
       ]
@@ -22,6 +22,7 @@
       "type": "registry:component",
       "title": "Transition Drawer",
       "description": "A transition drawer component",
+      "registryDependencies": ["button"],
       "dependencies": [
         "@radix-ui/react-visually-hidden",
         "react-use-measure",
@@ -34,15 +35,15 @@
           "type": "registry:component"
         },
         {
-          "path": "registry/new-york/ui/animate-height.tsx",
+          "path": "registry/new-york/components/ui/animate-height.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/new-york/ui/transition-panel.tsx",
+          "path": "registry/new-york/components/ui/transition-panel.tsx",
           "type": "registry:ui"
         },
         {
-          "path": "registry/new-york/ui/drawer.tsx",
+          "path": "registry/new-york/components/ui/drawer.tsx",
           "type": "registry:ui"
         }
       ]

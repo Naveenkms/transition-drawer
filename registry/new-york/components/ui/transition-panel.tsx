@@ -3,7 +3,7 @@ import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronRight } from "lucide-react";
 
-import { Button } from "./button";
+import { Button } from "@/registry/new-york/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type Direction = 1 | -1;

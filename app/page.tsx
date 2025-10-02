@@ -1,4 +1,4 @@
-import { TransitionDrawer } from "@/components/transition-drawer";
+import { TransitionDrawer } from "@/registry/new-york/components/transition-drawer";
 
 export default function Home() {
   return (

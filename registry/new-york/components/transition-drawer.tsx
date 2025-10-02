@@ -10,14 +10,14 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerHandle,
-} from "@/components/ui/drawer";
-import { AnimateHeight } from "@/components/ui/animate-height";
+} from "@/registry/new-york/components/ui/drawer";
+import { AnimateHeight } from "@/registry/new-york/components/ui/animate-height";
 import {
   TransitionPanel,
   TransitionPanelContent,
   TransitionPanelTrigger,
-} from "@/components/ui/transition-panel";
-import { Button, buttonVariants } from "@/components/ui/button";
+} from "@/registry/new-york/components/ui/transition-panel";
+import { Button, buttonVariants } from "@/registry/new-york/components/ui/button";
 
 export function TransitionDrawer() {
   return (
