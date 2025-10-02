@@ -1,0 +1,51 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme",
+  "homepage": "https://acme.com",
+  "items": [
+    {
+      "name": "transition-panel",
+      "type": "registry:ui",
+      "title": "Transition Panel",
+      "description": "A transition panel component",
+      "dependencies": ["motion"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/new-york/ui/transition-panel.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "transition-drawer",
+      "type": "registry:component",
+      "title": "Transition Drawer",
+      "description": "A transition drawer component",
+      "dependencies": [
+        "@radix-ui/react-visually-hidden",
+        "react-use-measure",
+        "motion",
+        "vaul"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/components/transition-drawer.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/new-york/ui/animate-height.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/new-york/ui/transition-panel.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/new-york/ui/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
