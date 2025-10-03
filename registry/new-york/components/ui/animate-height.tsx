@@ -11,10 +11,7 @@ export function AnimateHeight({ children, ...props }: AnimateHeightProps) {
   const [ref, bounds] = useMeasure();
 
   return (
-    <motion.div
-      animate={{ height: bounds.height > 0 ? bounds.height : "auto" }}
-      {...props}
-    >
+    <motion.div animate={{ height: bounds.height }} {...props}>
       <div ref={ref}>{children}</div>
     </motion.div>
   );

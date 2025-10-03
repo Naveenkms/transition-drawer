@@ -211,10 +211,7 @@ export function AnimateHeight({ children, ...props }: AnimateHeightProps) {
   const [ref, bounds] = useMeasure();
 
   return (
-    <motion.div
-      animate={{ height: bounds.height > 0 ? bounds.height : "auto" }}
-      {...props}
-    >
+    <motion.div animate={{ height: bounds.height }} {...props}>
       <div ref={ref}>{children}</div>
     </motion.div>
   );
@@ -273,14 +270,11 @@ const panelTransitionVariants = {
   enter: (direction: Direction) => ({
     opacity: 0,
     x: direction > 0 ? "100%" : "-100%",
-    position: "initial",
   }),
-  center: { opacity: 1, x: 0, zIndex: 1 },
+  center: { opacity: 1, x: 0 },
   exit: (direction: Direction) => ({
     opacity: 0,
     x: direction < 0 ? "100%" : "-100%",
-    position: "absolute",
-    zIndex: 0,
   }),
 };
 
@@ -316,23 +310,24 @@ function TransitionPanel({ defaultValue, children }: TransitionPanelProps) {
   };
 
   return (
-    <TransitionPanelContext value={value}>
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.div
-          key={currentPanel}
-          variants={panelTransitionVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            duration: 0.3,
-          }}
-          custom={direction}
-        >
+    <AnimatePresence initial={false} custom={direction} mode="popLayout">
+      <motion.div
+        key={currentPanel}
+        variants={panelTransitionVariants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        transition={{
+          x: { type: "spring", stiffness: 300, damping: 30 },
+          opacity: { duration: 0.2 },
+        }}
+        custom={direction}
+      >
+        <TransitionPanelContext value={value}>
           {children}
-        </motion.div>
-      </AnimatePresence>
-    </TransitionPanelContext>
+        </TransitionPanelContext>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
@@ -340,7 +335,7 @@ const useTransitionPanel = () => {
   const context = React.useContext(TransitionPanelContext);
 
   if (context === undefined)
-    throw new Error("useTransitionPanel must be used within a TransitionPanel");
+    throw new Error("useContentStack must be used within a TransitionPanel");
 
   return context;
 };
@@ -429,7 +424,6 @@ export {
   TransitionPanelBackButton,
 };
 ```
-
 ### Sample usage
 ```ts title="transition-panel-example.tsx"
 import {

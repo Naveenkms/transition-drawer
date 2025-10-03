@@ -32,14 +32,11 @@ const panelTransitionVariants = {
   enter: (direction: Direction) => ({
     opacity: 0,
     x: direction > 0 ? "100%" : "-100%",
-    position: "initial",
   }),
-  center: { opacity: 1, x: 0, zIndex: 1 },
+  center: { opacity: 1, x: 0 },
   exit: (direction: Direction) => ({
     opacity: 0,
     x: direction < 0 ? "100%" : "-100%",
-    position: "absolute",
-    zIndex: 0,
   }),
 };
 
@@ -75,23 +72,24 @@ function TransitionPanel({ defaultValue, children }: TransitionPanelProps) {
   };
 
   return (
-    <TransitionPanelContext value={value}>
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.div
-          key={currentPanel}
-          variants={panelTransitionVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            duration: 0.3,
-          }}
-          custom={direction}
-        >
+    <AnimatePresence initial={false} custom={direction} mode="popLayout">
+      <motion.div
+        key={currentPanel}
+        variants={panelTransitionVariants}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        transition={{
+          x: { type: "spring", stiffness: 300, damping: 30 },
+          opacity: { duration: 0.2 },
+        }}
+        custom={direction}
+      >
+        <TransitionPanelContext value={value}>
           {children}
-        </motion.div>
-      </AnimatePresence>
-    </TransitionPanelContext>
+        </TransitionPanelContext>
+      </motion.div>
+    </AnimatePresence>
   );
 }
 
